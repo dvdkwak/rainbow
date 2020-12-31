@@ -38,4 +38,5 @@ if(DEBUGMODE) {
 
 // Basic includes and running autoloader
 include_once ROOT . "system/functions/asset.php";
+include_once ROOT . "system/functions/view.php";
 include_once ROOT . "system/functions/autoloader.php";
