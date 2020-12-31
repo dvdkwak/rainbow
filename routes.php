@@ -7,7 +7,6 @@
  * $route->add('uri', 'view', 'controller');
  */
 
-// Start editing here! :D (uncomment the line below)
-// $route->add('rain', 'example.php');
+$route->add("admin", "admin/home.php");
 
 // _________________________________________________________________________
