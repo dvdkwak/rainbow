@@ -8,12 +8,7 @@
  * @return string
  */
 function view($link, $linkOnly = False) {
-    // check the value of DIRECTORY, if this has no value, remove all the "/" before
-    if(DIRECTORY === "/" || empty(DIRECTORY)) {
-        $link = ROOT . "/views/" . $link;
-    } else {
-        $link = ROOT . "/" . DIRECTORY . "/views/" . $link;
-    }
+    $link = ROOT . "/views/" . $link;
     if($linkOnly) {
         return $link;
     }

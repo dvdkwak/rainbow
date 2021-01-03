@@ -1,4 +1,4 @@
-<?php view("components/header.php"); ?>
+<?php include_once view("components/header.php", True); ?>
 
   <h1>Welcome to rainbow cms! :D</h1>
 
