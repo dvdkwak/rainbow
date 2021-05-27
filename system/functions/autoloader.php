@@ -5,6 +5,6 @@ foreach(glob(ROOT."system/classes/*.php") as $filename) {
 }
 
 // This will make it possible to autoload all models (no sub directories yet)
-foreach (glob(ROOT."models/*.php") as $filename) {
+foreach (glob(ROOT."models/*/*.php") as $filename) {
     include_once $filename;
 }
