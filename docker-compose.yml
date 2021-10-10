@@ -1,0 +1,63 @@
+version: '3.7'
+
+services:
+
+  php:
+    image: wodby/php
+    container_name: ${PROJECT_NAME}_php
+    restart: unless-stopped
+    networks:
+      - david_net
+    volumes:
+      - ./:/var/www/html
+
+  web:
+    image: wodby/apache
+    container_name: ${PROJECT_NAME}_web
+    restart: unless-stopped
+    networks:
+      - david_net
+    depends_on: 
+      - ${PROJECT_NAME}_php
+    volumes:
+      - ./:/var/www/html
+    environment: 
+      APACHE_LOG_LEVE: debug
+      APACHE_BACKEND_HOST: ${PROJECT_NAME}_php
+      APACHE_VHOST_PRESET: php
+      APACHE_DOCUMENT_ROOT: /var/www/html
+    labels:
+      - traefik.http.routers.${PROJECT_NAME}_web.rule=Host(`${PROJECT_BASE_URL}`)
+
+  mariadb:
+    image: mariadb
+    container_name: ${PROJECT_NAME}_mariadb
+    restart: unless-stopped
+    volumes: 
+      - db_data:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+
+  pma:
+    image: phpmyadmin
+    container_name: ${PROJECT_NAME}_pma
+    restart: unless-stopped
+    networks: 
+      - david_net
+    environment: 
+      PMA_HOST: ${PROJECT_NAME}_mariadb
+    labels: 
+      - traefik.http.routers.${PROJECT_NAME}_pma.rule=Host(`${PROJECT_PMA_URL}`)
+
+volumes:
+  db_data: {}
+
+networks:
+  default:
+    external: true
+    name: david_net
+  david_net:
+    external: true
