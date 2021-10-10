@@ -8,9 +8,9 @@
  * @return string
  */
 function view($link, $linkOnly = False) {
-    $link = ROOT . "/views/" . $link;
-    if($linkOnly) {
-        return $link;
-    }
-    include_once $link;
+  $link = ROOT . "/views/" . $link;
+  if($linkOnly) {
+    return $link;
+  }
+  include_once $link;
 }

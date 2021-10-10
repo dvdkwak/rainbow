@@ -7,11 +7,11 @@
  * @return string
  */
 function asset($link) {
-    // check the value of DIRECTORY, if this has no value, remove all the "/" before
-    if(DIRECTORY === "/" || empty(DIRECTORY)) {
-        $link = "/" . ASSETS_DIR . "/" . $link;
-    } else {
-        $link = "/" . DIRECTORY . "/" . ASSETS_DIR . "/" . $link;
-    }
-    return $link;
+  // check the value of DIRECTORY, if this has no value, remove all the "/" before
+  if(DIRECTORY === "/" || empty(DIRECTORY)) {
+    $link = "/" . ASSETS_DIR . "/" . $link;
+  } else {
+    $link = "/" . DIRECTORY . "/" . ASSETS_DIR . "/" . $link;
+  }
+  return $link;
 }

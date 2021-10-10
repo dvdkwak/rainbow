@@ -2,9 +2,9 @@
 
 // Setting the global url variable
 if(!empty($_GET['url'])){
-    $url = $_GET['url'];
+  $url = $_GET['url'];
 }else{
-    $url = "home";
+  $url = "home";
 }
 
 // setting the $urlParams variable
@@ -27,17 +27,17 @@ include_once "config.php";
 // Defining the root folder
 $root = $_SERVER['DOCUMENT_ROOT'];
 if(!empty(DIRECTORY) && DIRECTORY !== "/") {
-    $root .= "/" . DIRECTORY . "/";
+  $root .= "/" . DIRECTORY . "/";
 } else {
-    $root .= "/";
+  $root .= "/";
 }
 define("ROOT", $root);
 
 // setting the php error logging according to the 'DEBUGMODE'
 if(DEBUGMODE) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
 }
 
 // Basic includes and running autoloader
