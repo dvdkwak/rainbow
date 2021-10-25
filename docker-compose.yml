@@ -8,6 +8,8 @@ services:
     restart: unless-stopped
     networks:
       - david_net
+    environment:
+      PHP_DATE_TIMEZONE: Europe/Amsterdam
     volumes:
       - ./:/var/www/html
 
