@@ -10,6 +10,7 @@
 // Start editing here! :D (uncomment the line below)
 // $route->add('rain', 'example.php');
 
+$route->add("home", "home.php");
 $route->add("info", "info.php");
 
 // _________________________________________________________________________
