@@ -74,6 +74,10 @@ class Route {
    * @return array The data needed to make a page in an array
    */
   public function createPage($urlParams, $url) {
+    // First handle the Rainbow page builder, if this returns data (a page), we skip the default page building.
+    if($data = \Rainbow\RainbowService::createPage($urlParams, $url)) {
+      return $data;
+    }
     foreach($this->routes AS $key => $route){ // Foreach route
       $uri_path = explode("/", $route['route']); // create an array with all route params
       if(count($uri_path) === count($urlParams)){ // When the user given route and the existing route have the same amount of items
