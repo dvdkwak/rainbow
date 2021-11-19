@@ -2,6 +2,7 @@
 
 namespace Rainbow;
 
+use Rainbow\src\Controllers\PageController;
 use Rainbow\src\Services\PageService;
 use Rainbow\DB;
 
@@ -57,7 +58,15 @@ class RainbowService {
     if(count($urlParams) >= 2) {
       switch ($urlParams[1]) {
         case 'page':
-          include_once ROOT . "/system/rainbow/views/admin/page.php";
+          include_once ROOT . "/system/rainbow/src/controllers/PageController.php";
+          if(count($urlParams) >= 3 && $urlParams[2] != "new") {
+            $request = $urlParams[2];
+          } elseif(count($urlParams) >= 3 && $urlParams[2] == "new") {
+            $request = "new";
+          } else {
+            $request = "";
+          }
+          $data = PageController::init($request);
           break;
       }
     } else {

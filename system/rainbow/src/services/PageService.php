@@ -24,6 +24,20 @@ class PageService {
       $data = false;
     }
     return $data;
-  }
+  } // end of getActivePageByUri
+
+  // This method returns all pages without a 'removed' (2) status.
+  public static function getAllPages() {
+    $con = DB::connect();
+    $query = 'SELECT `id` FROM `Page` WHERE `status` != 2';
+    $result = $con->query($query);
+    if(!$con->error && $result->num_rows >= 1) {
+      while($row = $result->fetch_assoc()) {
+        $data[] = new Page($row['id']);
+      }
+      return $data;
+    }
+    return $con->error;
+  } // end of getAllPages
 
 }
