@@ -3,37 +3,37 @@ version: '3.7'
 services:
 
   php:
-    image: wodby/php
-    container_name: ${PROJECT_NAME}_php
+    image: wodby/php:${PHP_TAG}
+    container_name: ${COMPOSE_PROJECT_NAME}_php
     restart: unless-stopped
     networks:
-      - david_net
+      - web
     environment:
-      PHP_DATE_TIMEZONE: Europe/Amsterdam
+      PHP_DATE_TIMEZONE: ${PHP_TIMEZONE}
     volumes:
       - ./:/var/www/html
 
   web:
-    image: wodby/apache
-    container_name: ${PROJECT_NAME}_web
+    image: wodby/apache:${APACHE_TAG}
+    container_name: ${COMPOSE_PROJECT_NAME}_web
     restart: unless-stopped
     networks:
-      - david_net
+      - web
     depends_on: 
-      - ${PROJECT_NAME}_php
+      - ${COMPOSE_PROJECT_NAME}_php
     volumes:
       - ./:/var/www/html
     environment: 
       APACHE_LOG_LEVE: debug
-      APACHE_BACKEND_HOST: ${PROJECT_NAME}_php
+      APACHE_BACKEND_HOST: ${COMPOSE_PROJECT_NAME}_php
       APACHE_VHOST_PRESET: php
       APACHE_DOCUMENT_ROOT: /var/www/html
     labels:
-      - traefik.http.routers.${PROJECT_NAME}_web.rule=Host(`${PROJECT_BASE_URL}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}_web.rule=Host(`${PROJECT_BASE_URL}`)
 
   mariadb:
-    image: mariadb
-    container_name: ${PROJECT_NAME}_mariadb
+    image: mariadb:${MARIADB_TAG}
+    container_name: ${COMPOSE_PROJECT_NAME}_mariadb
     restart: unless-stopped
     volumes: 
       - db_data:/var/lib/mysql
@@ -44,15 +44,15 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
 
   pma:
-    image: phpmyadmin
-    container_name: ${PROJECT_NAME}_pma
+    image: phpmyadmin:${PMA_TAG}
+    container_name: ${COMPOSE_PROJECT_NAME}_pma
     restart: unless-stopped
     networks: 
-      - david_net
+      - web
     environment: 
-      PMA_HOST: ${PROJECT_NAME}_mariadb
+      PMA_HOST: ${COMPOSE_PROJECT_NAME}_mariadb
     labels: 
-      - traefik.http.routers.${PROJECT_NAME}_pma.rule=Host(`${PROJECT_PMA_URL}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}_pma.rule=Host(`${PROJECT_PMA_URL}`)
 
 volumes:
   db_data: {}
@@ -60,6 +60,7 @@ volumes:
 networks:
   default:
     external: true
-    name: david_net
-  david_net:
+    name: ${NETWORK_NAME}
+  web:
     external: true
+    name: ${NETWORK_NAME}
